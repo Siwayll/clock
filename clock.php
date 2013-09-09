@@ -1,4 +1,12 @@
 <?php
+/**
+ * Pointeuse simple
+ *
+ * @package    Clock
+ * @subpackage Main
+ * @author     Siwaÿll <sanath.labs@gmail.com>
+ * @license    beerware http://wikipedia.org/wiki/Beerware
+ */
 
 $date = date('Y.m.d');
 $fileName = $date . '.csv';
