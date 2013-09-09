@@ -5,28 +5,40 @@
  * @package    Clock
  * @subpackage Main
  * @author     Siwaÿll <sanath.labs@gmail.com>
+ * @author     Jonathan Sahm <contact@johnstyle.fr>
  * @license    beerware http://wikipedia.org/wiki/Beerware
  */
 
-$date = date('Y.m.d');
-$fileName = $date . '.csv';
+$archivesPath = 'archives';
 
-file_put_contents($fileName, '', FILE_APPEND);
+/** Dossier d'archives */
+if (!is_dir($archivesPath)) {
+    mkdir($archivesPath);
+}
 
+/** Fichier du jour */
+$fileName = $archivesPath . '/' . date('Y-m-d') . '.csv';
+
+/** Taches */
 do {
-    $start = new DateTime();
-    file_put_contents($fileName, "\r\n" . $start->format('H:i') . ';', FILE_APPEND);
-    $choice = trim(fgets(STDIN));
-    $end = new DateTime();
-    $line = $end->format('H:i') . ';';
-    $diff = $start->diff($end);
+    $start = new DateTime ();
+    $taskStart = $start->format('H:i');
+    $line = $taskStart . "\t";
+    echo "Start: " . $taskStart . "\n";
 
-    $line .= $diff->format('%hh %im') . ';' . $choice;
+    $taskName = trim(fgets(STDIN));
+
+    $end = new DateTime ();
+    $taskEnd = $start->format('H:i');
+    $line .= $taskEnd . "\t";
+
+    $diff = $start->diff($end);
+    $taskTime = $diff->format('%hh %im');
+    $line .= $taskTime . "\t";
+    echo "Time: " . $taskTime . "\n\n";
+
+    $line .= $taskName . "\n";
 
     file_put_contents($fileName, $line, FILE_APPEND);
 
-    echo $diff->format('%hh %im') . "\r\n";
-
-} while ($choice != 'q');
-
-
+} while ($taskName != 'q');
