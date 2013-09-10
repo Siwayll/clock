@@ -26,11 +26,13 @@ do {
     $line = $taskStart . "\t";
     echo "Start: " . $taskStart . "\n";
 
+    file_put_contents($fileName, $line, FILE_APPEND);
+
     $taskName = trim(fgets(STDIN));
 
     $end = new DateTime ();
     $taskEnd = $start->format('H:i');
-    $line .= $taskEnd . "\t";
+    $line = $taskEnd . "\t";
 
     $diff = $start->diff($end);
     $taskTime = $diff->format('%hh %im');
